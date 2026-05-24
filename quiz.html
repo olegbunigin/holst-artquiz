@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Викторина — Холст</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      background: #FFFFFF;
+      color: #1A2C1E;
+      padding: 1.5rem;
+    }
+
+    .quiz-container {
+      max-width: 750px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 32px;
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.04);
+      padding: 1.8rem;
+      border: 1px solid #E2F0E4;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 500;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #2C5A2E;
+    }
+
+    .art-image {
+      width: 100%;
+      max-height: 400px;
+      object-fit: contain;
+      background: #F9FEF9;
+      border-radius: 24px;
+      margin-bottom: 1.8rem;
+      border: 1px solid #DDEBE0;
+      padding: 0.5rem;
+    }
+
+    .question-text {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      background: #F4FBF4;
+      padding: 0.8rem 1rem;
+      border-radius: 28px;
+      border-left: 6px solid #AAD6B0;
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      margin-bottom: 2rem;
+    }
+
+    .option {
+      background: white;
+      border: 2px solid #DCF0E0;
+      border-radius: 60px;
+      padding: 12px 20px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.1s linear;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .option.selected {
+      background: #E1F3E5;
+      border-color: #8BCA9A;
+      box-shadow: 0 2px 8px rgba(100, 170, 110, 0.2);
+    }
+
+    .option-letter {
+      font-weight: 700;
+      width: 28px;
+      height: 28px;
+      background: #EAF7EC;
+      border-radius: 30px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #2F6B3A;
+    }
+
+    .option.selected .option-letter {
+      background: #B2DFBA;
+      color: #1C401F;
+    }
+
+    .btn {
+      background: #CBE5D1;
+      border: none;
+      padding: 12px 28px;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 60px;
+      color: #1F4224;
+      cursor: pointer;
+      transition: 0.15s;
+      margin-right: 12px;
+    }
+
+    .btn-primary {
+      background: #AAD0B3;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    .btn-primary:hover {
+      background: #90C29C;
+    }
+
+    .info-panel {
+      margin-top: 28px;
+      background: #F6FCF7;
+      border-radius: 28px;
+      padding: 1.3rem;
+      border-left: 5px solid #9DCEA8;
+      display: none;
+      animation: fadeIn 0.2s ease;
+    }
+
+    .info-panel.show {
+      display: block;
+    }
+
+    .result-badge {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 0.8rem;
+    }
+
+    .correct {
+      color: #2F7840;
+    }
+    .wrong {
+      color: #C05A4B;
+    }
+
+    .fact-text {
+      margin: 12px 0;
+      line-height: 1.45;
+    }
+
+    .article-link {
+      display: inline-block;
+      margin-top: 12px;
+      color: #468C54;
+      text-decoration: none;
+      font-weight: 500;
+      border-bottom: 1px solid #B3DCBB;
+    }
+
+    .next-area {
+      margin-top: 20px;
+      text-align: right;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-bottom: 1rem;
+      color: #589F66;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 2rem;
+      font-size: 0.75rem;
+      color: #B2C8B5;
+    }
+
+    @media (max-width: 600px) {
+      .quiz-container {
+        padding: 1.2rem;
+      }
+      .question-text {
+        font-size: 1.2rem;
+      }
+      .btn {
+        padding: 10px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div style="max-width: 850px; margin: 0 auto;">
+    <a href="index.html" class="back-link">← На главную</a>
+    <div class="quiz-container" id="quizApp">
+      <h2>🎨 Холст · викторина</h2>
+      <img id="paintingImage" class="art-image" src="" alt="Картина" referrerpolicy="no-referrer">
+      <div class="question-text" id="questionText">Загрузка...</div>
+      <div class="options" id="optionsContainer"></div>
+      <div>
+        <button class="btn btn-primary" id="submitBtn">✔️ Подтвердить ответ</button>
+      </div>
+      <div id="infoPanel" class="info-panel">
+        <div id="resultBadge" class="result-badge"></div>
+        <div id="factText" class="fact-text"></div>
+        <a id="articleLink" class="article-link" href="#" target="_blank" rel="noopener noreferrer">📖 Читать подробную статью →</a>
+        <div class="next-area">
+          <button class="btn" id="nextBtn">➡️ Следующий вопрос</button>
+        </div>
+      </div>
+    </div>
+    <footer>«Холст» — искусство без скуки. Каждый ответ = справка + ссылка.</footer>
+  </div>
+
+  <script>
+
+    const paintings = [
+      { id: 1, imageUrl: "https://upload.wikimedia.org/wikipedia/commons/e/ec/Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg", question: "Кто написал эту картину?", options: ["Рафаэль", "Леонардо да Винчи", "Микеланджело", "Караваджо"], correct: 1, fact: "«Мона Лиза» — самая известная картина Леонардо да Винчи. Славится загадочной улыбкой.", articleUrl: "https://ru.wikipedia.org/wiki/Мона_Лиза" },
+      { id: 2, imageUrl: "https://upload.wikimedia.org/wikipedia/commons/e/ea/Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg", question: "Как называется это произведение Ван Гога?", options: ["Подсолнухи", "Ирисы", "Звёздная ночь", "Ночная терраса"], correct: 2, fact: "«Звёздная ночь» написана в 1889 году в психиатрической лечебнице.", articleUrl: "https://ru.wikipedia.org/wiki/Звёздная_ночь" },
+      { id: 3, imageUrl: "https://upload.wikimedia.org/wikipedia/commons/1/17/Edvard_Munch%2C_1893%2C_The_Scream%2C_oil%2C_tempera_and_pastel_on_cardboard%2C_National_Gallery_of_Norway.jpg", question: "Кто автор картины «Крик»?", options: ["Эдвард Мунк", "Пабло Пикассо", "Сальвадор Дали", "Густав Климт"], correct: 0, fact: "«Крик» — экспрессионистская работа Эдварда Мунка, символ тревоги.", articleUrl: "https://ru.wikipedia.org/wiki/Крик_(картина)" },
+      { id: 4, imageUrl: "https://upload.wikimedia.org/wikipedia/commons/d/dd/The_Persistence_of_Memory.jpg", question: "Какая идея в основе «Постоянства памяти» Дали?", options: ["Революция", "Текучесть времени", "Сюрреалистический сон", "Атомный взрыв"], correct: 1, fact: "Мягкие тающие часы — символ относительности времени.", articleUrl: "https://ru.wikipedia.org/wiki/Постоянство_памяти" },
+      { id: 5, imageUrl: "https://upload.wikimedia.org/wikipedia/commons/0/0b/Sandro_Botticelli_-_La_nascita_di_Venere_-_Google_Art_Project_-_edited.jpg", question: "Какой сюжет у картины Боттичелли?", options: ["Рождение Венеры", "Весна", "Похищение Европы", "Венера и Марс"], correct: 0, fact: "«Рождение Венеры» — эпоха Возрождения, богиня выходит из морской пены.", articleUrl: "https://ru.wikipedia.org/wiki/Рождение_Венеры_(картина_Боттичелли)" },
+      { id: 6, imageUrl: "https://upload.wikimedia.org/wikipedia/commons/5/5b/Kazimir_Malevich%2C_1915%2C_Black_Suprematic_Square%2C_oil_on_linen_canvas%2C_79.5_x_79.5_cm%2C_Tretyakov_Gallery%2C_Moscow.jpg", question: "Какую концепцию олицетворяет «Чёрный квадрат»?", options: ["Кубизм", "Супрематизм", "Абстракционизм", "Футуризм"], correct: 1, fact: "«Чёрный квадрат» Малевича — манифест супрематизма, ноль форм.", articleUrl: "https://ru.wikipedia.org/wiki/Чёрный_квадрат" },
+      { id: 7, imageUrl: "https://upload.wikimedia.org/wikipedia/commons/4/4c/Pierre-Auguste_Renoir_-_Le_Moulin_de_la_Galette.jpg", question: "Кто написал «Бал в Мулен де ла Галетт»?", options: ["Клод Моне", "Эдгар Дега", "Пьер Огюст Ренуар", "Альфред Сислей"], correct: 2, fact: "Ренуар изобразил воскресный день на Монмартре, радость жизни.", articleUrl: "https://ru.wikipedia.org/wiki/Бал_в_Мулен_де_ла_Галетт" },
+      { id: 8, imageUrl: "https://upload.wikimedia.org/wikipedia/commons/5/59/Claude_Monet%2C_Impression%2C_soleil_levant.jpg", question: "Какая картина дала название импрессионизму?", options: ["Стог сена", "Впечатление. Восходящее солнце", "Водяные лилии", "Руанский собор"], correct: 1, fact: "Моне, «Впечатление, восходящее солнце» — критик назвал направление импрессионизмом.", articleUrl: "https://ru.wikipedia.org/wiki/Впечатление._Восходящее_солнце" },
+      { id: 9, imageUrl: "https://upload.wikimedia.org/wikipedia/commons/9/94/Vermeer_-_The_Girl_with_a_Pearl_Earring.jpg", question: "Как называется эта картина Вермеера?", options: ["Девушка с жемчужной серёжкой", "Молочница", "Уличная музыкантша", "Девушка за верджинелом"], correct: 0, fact: "«Девушка с жемчужной серёжкой» называют северной Моной Лизой.", articleUrl: "https://ru.wikipedia.org/wiki/Девушка_с_жемчужной_серёжкой" },
+      { id: 10, imageUrl: "https://upload.wikimedia.org/wikipedia/commons/1/1a/Diego_Vel%C3%A1zquez_-_Las_Meninas_or_The_Family_of_Philip_IV_-_WGA24446.jpg", question: "Что необычного в «Менинах» Веласкеса?", options: ["На ней изображён сам художник", "В центре — собака", "Отсутствует королевская чета", "Картина написана на дереве"], correct: 0, fact: "Веласкес изобразил себя за мольбертом, а зритель — король.", articleUrl: "https://ru.wikipedia.org/wiki/Менины" }
+    ];
+
+    let currentQuestionObj = null;
+    let selectedOptionIndex = null;
+    let answerSubmitted = false;
+
+    const imgEl = document.getElementById('paintingImage');
+    const questionTextEl = document.getElementById('questionText');
+    const optionsContainer = document.getElementById('optionsContainer');
+    const submitBtn = document.getElementById('submitBtn');
+    const infoPanel = document.getElementById('infoPanel');
+    const resultBadge = document.getElementById('resultBadge');
+    const factText = document.getElementById('factText');
+    const articleLink = document.getElementById('articleLink');
+    const nextBtn = document.getElementById('nextBtn');
+
+    function getRandomQuestion() {
+      const randomIndex = Math.floor(Math.random() * paintings.length);
+      return { ...paintings[randomIndex] };
+    }
+
+    function resetUIForNewQuestion() {
+      selectedOptionIndex = null;
+      answerSubmitted = false;
+      infoPanel.classList.remove('show');
+      const allOptions = document.querySelectorAll('.option');
+      allOptions.forEach(opt => opt.classList.remove('selected'));
+      submitBtn.disabled = false;
+      submitBtn.style.opacity = '1';
+      submitBtn.style.cursor = 'pointer';
+    }
+
+    function renderCurrentQuestion() {
+      if (!currentQuestionObj) return;
+      imgEl.src = currentQuestionObj.imageUrl;
+      imgEl.alt = `Картина ${currentQuestionObj.id}`;
+      questionTextEl.innerText = currentQuestionObj.question;
+
+      optionsContainer.innerHTML = '';
+      currentQuestionObj.options.forEach((opt, idx) => {
+        const optionDiv = document.createElement('div');
+        optionDiv.className = 'option';
+        if (selectedOptionIndex === idx) optionDiv.classList.add('selected');
+        const letterSpan = document.createElement('span');
+        letterSpan.className = 'option-letter';
+        letterSpan.innerText = String.fromCharCode(65 + idx);
+        const textSpan = document.createElement('span');
+        textSpan.innerText = opt;
+        optionDiv.appendChild(letterSpan);
+        optionDiv.appendChild(textSpan);
+        optionDiv.addEventListener('click', () => {
+          if (answerSubmitted) return;
+          document.querySelectorAll('.option').forEach(optEl => optEl.classList.remove('selected'));
+          optionDiv.classList.add('selected');
+          selectedOptionIndex = idx;
+        });
+        optionsContainer.appendChild(optionDiv);
+      });
+    }
+
+    function loadNewQuestion() {
+      currentQuestionObj = getRandomQuestion();
+      resetUIForNewQuestion();
+      renderCurrentQuestion();
+    }
+
+    function submitAnswer() {
+      if (answerSubmitted) {
+        alert('Вы уже ответили на этот вопрос. Нажмите «Следующий вопрос».');
+        return;
+      }
+      if (selectedOptionIndex === null) {
+        alert('Пожалуйста, выберите вариант ответа.');
+        return;
+      }
+
+      answerSubmitted = true;
+      const isCorrect = (selectedOptionIndex === currentQuestionObj.correct);
+      
+      if (isCorrect) {
+        resultBadge.innerHTML = '✅ Верно!';
+        resultBadge.className = 'result-badge correct';
+      } else {
+        const correctAnswerText = currentQuestionObj.options[currentQuestionObj.correct];
+        resultBadge.innerHTML = `❌ Неверно. Правильный ответ: ${correctAnswerText}`;
+        resultBadge.className = 'result-badge wrong';
+      }
+      
+      factText.innerText = currentQuestionObj.fact;
+      articleLink.href = currentQuestionObj.articleUrl;
+      articleLink.innerText = '📖 Подробная статья об этом произведении';
+      infoPanel.classList.add('show');
+      
+      submitBtn.disabled = true;
+      submitBtn.style.opacity = '0.7';
+      submitBtn.style.cursor = 'default';
+    }
+
+    function init() {
+      loadNewQuestion();
+      submitBtn.addEventListener('click', submitAnswer);
+      nextBtn.addEventListener('click', () => {
+        loadNewQuestion();
+      });
+    }
+
+    init();
+  </script>
+</body>
+</html>

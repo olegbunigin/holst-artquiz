@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Холст — узнай живопись за 30 секунд</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      background-color: #FFFFFF;
+      color: #1E2F1E;
+      line-height: 1.4;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .hero {
+      text-align: center;
+      max-width: 700px;
+    }
+
+    .logo {
+      font-size: 3rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+    }
+
+    .logo span {
+      background: linear-gradient(135deg, #9ED8B0 0%, #6F9E7C 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    h1 {
+      font-size: 2.4rem;
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+
+    .tagline {
+      font-size: 1.25rem;
+      color: #2C4A2E;
+      margin-bottom: 2rem;
+      border-left: 4px solid #BDE0C0;
+      padding-left: 1rem;
+      text-align: left;
+      display: inline-block;
+    }
+
+    .desc {
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+      color: #2F3E2F;
+      background-color: #F4FBF4;
+      padding: 1.2rem;
+      border-radius: 24px;
+    }
+
+    .stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      justify-content: center;
+      margin: 2rem 0;
+    }
+
+    .stat-card {
+      background: #F9FFF9;
+      border-radius: 20px;
+      padding: 1rem 1.2rem;
+      width: 160px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+      border: 1px solid #DCF0E0;
+    }
+
+    .stat-number {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #589B6B;
+    }
+
+    .stat-label {
+      font-size: 0.85rem;
+      color: #4B6B4D;
+    }
+
+    .btn {
+      background-color: #C8E6D0;
+      border: none;
+      padding: 14px 32px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border-radius: 60px;
+      color: #1E3A22;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-decoration: none;
+      display: inline-block;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+
+    .btn:hover {
+      background-color: #B0D5B8;
+      transform: scale(1.02);
+      box-shadow: 0 8px 20px rgba(100, 150, 100, 0.15);
+    }
+
+    .btn-large {
+      padding: 16px 42px;
+      font-size: 1.25rem;
+    }
+
+    footer {
+      margin-top: 3rem;
+      font-size: 0.8rem;
+      color: #8FAA92;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 1.5rem;
+      }
+      h1 {
+        font-size: 1.8rem;
+      }
+      .stat-card {
+        width: 130px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <div class="logo">
+        «<span>Холст</span>»
+      </div>
+      <h1>Расширь кругозор<br>за пару вопросов</h1>
+      <div class="tagline">
+        ✦ 30 секунд на картину ✦<br>
+        ✦ Факт + ссылка ✦
+      </div>
+      <div class="desc">
+        Короткие квизы о живописи для занятых людей. Ответьте на вопрос — получите краткую справку и ссылку на статью. Без долгого чтения и поиска.
+      </div>
+      <div class="stats">
+        <div class="stat-card">
+          <div class="stat-number">74%</div>
+          <div class="stat-label">россиян не ходят в музеи из-за нехватки времени</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">2–3 мин</div>
+          <div class="stat-label">среднее время концентрации в приложении</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">+23%</div>
+          <div class="stat-label">рост рынка edtech-игр в год</div>
+        </div>
+      </div>
+      <a href="quiz.html" class="btn btn-large">✨ Начать викторину ✨</a>
+    </div>
+    <footer>
+      🖼️ «Холст» — учитесь играя, запоминайте главное
+    </footer>
+  </div>
+</body>
+</html>
